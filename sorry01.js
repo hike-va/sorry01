@@ -8,22 +8,61 @@ const rndInt = function (maxNum) {
     return Math.floor(Math.random() * (maxNum+1) );
 }
 
-// relative probablity of each option
-const probabilities = [
-   10, // [0]
-   20, // [1]
-   2, // [2]
-   2, // [3]
-   1, // [4]
-   1, // [5]
-   1, // [6]
-   9 // [7] 
+
+const cards = [
+    { t: "Either move a pawn from Start or move a pawn one space forward.",
+        n: 1,
+        p: 5
+    },
+    { t: "Either move a pawn from Start or move a pawn two spaces forward.\n" +
+      "Draw again",
+        n: 2,
+        p: 4
+    },
+    { t: "Move a pawn three spaces forward.",
+        n: 3,
+        p: 4
+    },
+     { t: "Move a pawn four spaces backward.",
+        n: 4,
+        p: 4
+    },
+    { t: "Move a pawn five spaces foward.",
+        n: 5,
+        p: 4
+    },
+    { t: "Move one pawn seven spaces forward,\n" + "or split the seven spaces between two pawns (such as four spaces for one pawn and three for another). ",
+        n: 7,
+        p: 4
+    },
+    { t: "Move a pawn eight spaces foward.",
+        n: 8,
+        p: 4
+    },
+    { t: "Move a pawn ten spaces forward or one space backward.\n" + "If none of a player's pawns can move forward 10 spaces, then one pawn must move back one space.",
+        n: 10,
+        p: 4
+    },
+    { t: "Move eleven spaces forward, or switch the places of one of the player's own pawns and an opponent's pawn.\n" + "A player who cannot move 11 spaces is not forced to switch and instead can end their turn.\n" + "An 11 cannot be used to switch a pawn that is in a Safety Zone, or to move a pawn out of Start.",
+        n: 11,
+        p: 4
+    },
+    { t: "Move a pawn twelve spaces forward.",
+        n: 12,
+        p: 4
+    },
+    { t: "Take any one pawn from Start and move it directly to a square occupied by any opponent's pawn, sending that pawn back to its own Start.\n" + "A Sorry! card cannot be used on an opponent's pawn in a Safety Zone or at the Home base.\n" + "If there are no pawns on the player's Start, or no opponent's pawns on any space that can be moved to, the turn ends.",
+        n: "Sorry!",
+        p: 4
+    },
 ];
 
 const normalizedProbs = function() {
-  const sum = probabilities.reduce((accumulator, v) => accumulator + v, 0);
-  return probabilities.map( x => x/sum);
+
+  const sum = cards.reduce((accumulator, v) => accumulator + v.p, 0);
+  return cards.map( x => x.p/sum);
 }();
+
 
 // returns one of the choices defined by probabilities[], between 0 and (probabilities.length-1)
 const rndIntWithProb = function() {
@@ -53,21 +92,17 @@ const rndIntWithProb = function() {
     return ret;
 }
 
-const cards = [
-    "Card 0 text",
-    "Card One text",
-    "Card two text",
-    "Card 3",
-    "Card 4 text",
-    "Card 5 text",
-    "Card 6 text",
-    "Card 7 text",
-];
 
 const cardTextGenerator = function() {
-    let n = rndIntWithProb(); // rndInt(7); // 0..7
-    let txt = cards[n];
-    return "Your Number is " + n + "   \n" + txt;
+    
+
+    //let cardIndex = rndInt(cards.length - 1);
+
+    let cardIndex = rndIntWithProb();
+
+    let card = cards[cardIndex];
+
+    return "Card # " + card.n + "\n" + card.t;
 }
 
 let clickCount = 0;

@@ -60,5 +60,11 @@ h1 {
 }
 
 .cntText input {
-    width: 30px;
+    width: 50px;
+    font-size:medium;
+}
+
+.histList {
+    height: 80px;
+    overflow: scroll;
 }

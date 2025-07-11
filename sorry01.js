@@ -1,7 +1,9 @@
-// Get references to the button and textarea
+
 const writeButton = document.getElementById('writeButton');
+const resetButton = document.getElementById('resetButton');
 const textArea = document.getElementById('textArea');
 const cntInput = document.getElementById('cnt');
+const histUL = document.getElementById('historyUL');
 
 // returns int in [0, maxNum ]
 const rndInt = function (maxNum) {
@@ -93,6 +95,12 @@ const rndIntWithProb = function() {
 }
 
 
+const addToHistory = function(txt) {
+    const liel = document.createElement('li');
+    liel.textContent = txt;
+    histUL.prepend(liel);
+}
+
 const cardTextGenerator = function() {
     
 
@@ -102,12 +110,14 @@ const cardTextGenerator = function() {
 
     let card = cards[cardIndex];
 
+    addToHistory('Card # ' + card.n);
+
     return "Card # " + card.n + "\n" + card.t;
 }
 
 let clickCount = 0;
 
-// Add click event listener to the button
+
 writeButton.addEventListener('click', function () {
     
     const currentText = cardTextGenerator();
@@ -116,10 +126,19 @@ writeButton.addEventListener('click', function () {
     clickCount++;
     cntInput.value = "- " + clickCount + " -";
 
+    
+
     textArea.style.backgroundColor = '#e8f5e8';
     setTimeout(() => {
         textArea.style.backgroundColor = '';
     }, 300);
+});
+
+resetButton.addEventListener('click', function () {
+    textArea.value="";
+    clickCount = 0;
+    histUL.innerHTML = "";
+    cntInput.value = "- 0 -" ;
 });
 
 /*
